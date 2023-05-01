@@ -52,7 +52,7 @@ module.exports.create = async (req, res)=>{
           catch(err) {
                console.log('error in creating user');
                return;
-          } 
+          }
      }
      else {
           return res.redirect('back');
