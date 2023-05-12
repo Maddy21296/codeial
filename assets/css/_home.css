@@ -1,7 +1,6 @@
-body{
-    background-color: rgb(255, 0, 136);
-    background-image: radial-gradient(cyan,green);
-}
-h1{
-    text-transform: uppercase;
-}
+body {
+  background-color: #ff0088;
+  background-image: radial-gradient(cyan, green); }
+
+h1 {
+  text-transform: uppercase; }
