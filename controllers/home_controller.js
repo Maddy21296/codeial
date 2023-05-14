@@ -1,10 +1,24 @@
-module.exports.home = function(req,res){
-    console.log(req.cookies); // this is used for requesting cookie value which is created in browser
-    res.cookie('user-id', 9494);// this is used for change cookie value which is created in browser
-    return res.render('home',{
-        title : "Home"
-    });
+const Post = require('../models/post');
+
+
+
+module.exports.home = async function(req,res){
+    // console.log(req.cookies); // this is used for requesting cookie value which is created in browser
+    // res.cookie('user-id', 9494);// this is used for change cookie value which is created in browser
+
+    try{
+        let posts = await Post.find({}).populate('user') // this populate function is used to display all user's data with post
+        return res.render('home',{
+            title : "Codeial | Home",
+            posts : posts
+        });
+    }catch(err){
+    console.log('Error', err);
+    return;
+    }
+
 }
+    
 
 module.exports.partytime = function(req,res){
     return res.end('<h1>Party time is 9PM </h1>');

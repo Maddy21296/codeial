@@ -7,7 +7,7 @@ const postSchema = new mongoose.Schema({
         unique: true // this is used for that every email should be unique in database
 
     },
-    User:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
