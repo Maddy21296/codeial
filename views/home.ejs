@@ -21,8 +21,18 @@
                                         <small>
                                                 <%= post.user.name%> <!--post.user.name is used to display only user's name with post data-->
                                         </small> <!--post.user is used to display user id (by default related to user id)with post that is created-->
-                                </li>
                                         </p>
+                                        <div class="post-comments">
+                                                <% if (locals.user) { %>
+                                                        <form action="/comments/create" method="Post">
+                                                                <input type="text" name="content" placeholder="Type here to add comments...">
+                                                                <input type="hidden" name="post" value="<%=post._id%>">
+                                                                <input type="submit" value="Add Comment">
+                                                        </form>
+                                                <% }%>
+
+                                        </div>
+                                </li>
                                         
                                 <%}%>   
                         </ul>
