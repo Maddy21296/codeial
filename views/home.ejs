@@ -5,7 +5,7 @@
                 <h4>Posts</h4>
                 <% if(locals.user){%>
                 <form action="/posts/create" id="new-post-form" method="Post">
-                        <textarea name="content" cols="30" rows="3" placeholder="Type here..."></textarea>
+                        <textarea name="content" cols="30" rows="3" placeholder="Type here..." required></textarea>
                         <input type="submit" value="Post">
 
                 </form>
@@ -25,11 +25,27 @@
                                         <div class="post-comments">
                                                 <% if (locals.user) { %>
                                                         <form action="/comments/create" method="Post">
-                                                                <input type="text" name="content" placeholder="Type here to add comments...">
+                                                                <input type="text" name="content" placeholder="Type here to add comments..." required>
                                                                 <input type="hidden" name="post" value="<%=post._id%>">
                                                                 <input type="submit" value="Add Comment">
                                                         </form>
                                                 <% }%>
+                                                <div class="post-comments-list">
+                                                        <ul id="post-comments-<%= post._id%>">
+                                                                <% for (comment of post.comments){%>
+                                                                        <p>
+                                                                                <%= comment.content%>
+                                                                                <br>
+                                                                                <small>
+                                                                                        <%= comment.user.name%> <!--comment.user.name is used to display only user's name with post data-->
+                                                                                </small>
+                                                                        </p>
+
+                                                                <%}%>
+
+                                                        </ul>
+
+                                                </div>
 
                                         </div>
                                 </li>

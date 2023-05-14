@@ -7,7 +7,14 @@ module.exports.home = async function(req,res){
     // res.cookie('user-id', 9494);// this is used for change cookie value which is created in browser
 
     try{
-        let posts = await Post.find({}).populate('user') // this populate function is used to display all user's data with post
+        let posts = await Post.find({})
+        .populate('user') // this populate function is used to display all user's data with post
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        });
         return res.render('home',{
             title : "Codeial | Home",
             posts : posts
