@@ -1,4 +1,5 @@
-const Post = require('../models/post')
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 module.exports.create = async (req, res) => {
     try{
@@ -14,4 +15,29 @@ module.exports.create = async (req, res) => {
         return res.redirect('back');
     }
   
+}
+
+
+module.exports.destroy = async (req, res) => {
+
+    try {
+        let post = await Post.findById(req.params.id);
+        // .id means converting the object id into string
+        if (post.user == req.user.id) {
+
+            // CHANGE :: delete the associated likes for the post and all its comments' likes too
+            post.remove();
+
+            await Comment.deleteMany({ post: req.params.id });
+
+            return res.redirect('back');
+        } else {
+            return res.redirect('back');
+        }
+
+    } catch (err) {
+        console.log(err);
+        return res.redirect('back');
+    }
+
 }
