@@ -14,51 +14,7 @@
                         <ul>
                                 <% for(post of posts){%>
                                 
-                                <li>
-                                        <p>
-                                                <% if (locals.user && locals.user.id == post.user.id) { %>
-                                                <small>
-                                                        <a href="/posts/destroy/<%= post.id %>">Delete</a>
-                                                </small>
-                                                <% } %>
-                                                <%= post.content %>
-                                                <br>
-                                                <small>
-                                                        <%= post.user.name%> <!--post.user.name is used to display only user's name with post data-->
-                                                </small> <!--post.user is used to display user id (by default related to user id)with post that is created-->
-                                        </p>
-                                        <div class="post-comments">
-                                                <% if (locals.user) { %>
-                                                        <form action="/comments/create" method="Post">
-                                                                <input type="text" name="content" placeholder="Type here to add comments..." required>
-                                                                <input type="hidden" name="post" value="<%=post._id%>">
-                                                                <input type="submit" value="Add Comment">
-                                                        </form>
-                                                <% }%>
-                                                <div class="post-comments-list">
-                                                        <ul id="post-comments-<%= post._id%>">
-                                                                <% for (comment of post.comments){%>
-                                                                        <p>
-                                                                                <% if (locals.user && locals.user.id == comment.user.id) { %>
-                                                                                <small>
-                                                                                        <a href="/comments/destroy/<%= comment.id %>">Delete</a>
-                                                                                </small>
-                                                                                <% } %>
-                                                                                <%= comment.content%>
-                                                                                <br>
-                                                                                <small>
-                                                                                        <%= comment.user.name%> <!--comment.user.name is used to display only user's name with post data-->
-                                                                                </small>
-                                                                        </p>
-
-                                                                <%}%>
-
-                                                        </ul>
-
-                                                </div>
-
-                                        </div>
-                                </li>
+                                <%- include('_post') -%><!--to include partials which we created in different files when a singular file getting larger-->
                                         
                                 <%}%>   
                         </ul>
