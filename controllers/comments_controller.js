@@ -32,7 +32,7 @@ module.exports.destroy = async function(req, res){
 
             let postId = comment.post;
 
-            comment.remove();
+            await comment.deleteOne();
 
             let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
 
