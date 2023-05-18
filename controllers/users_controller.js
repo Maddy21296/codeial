@@ -11,6 +11,22 @@ module.exports.profile = async function(req, res){
   };
 
 
+module.exports.update = async function(req,res){
+  if(req.user.id == req.params.id){
+    try{
+      let user = await User.findByIdAndUpdate(req.params.id,req.body);
+      
+        return res.redirect('back');
+      
+    }catch(err){
+      console.log(err);
+      return res.redirect('back');
+    }
+  }
+}
+
+
+
 // render the sign up page
 module.exports.signUp = function(req,res){
     if(req.isAuthenticated()){
