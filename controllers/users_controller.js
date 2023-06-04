@@ -19,7 +19,7 @@ module.exports.update = async function(req,res){
         return res.redirect('back');
       
     }catch(err){
-      console.log(err);
+      req.flash('error', err);
       return res.redirect('back');
     }
   }
@@ -51,6 +51,7 @@ module.exports.signIn = function(req,res){
 module.exports.create = async function(req, res) {
     try {
       if (req.body.password != req.body.confirm_password) {
+        req.flash('error', 'Passwords do not match');
         return res.redirect('back');
       }
   
@@ -60,6 +61,7 @@ module.exports.create = async function(req, res) {
         const userCreate = await User.create(req.body);
         return res.redirect('/users/SignIn');
       } else {
+        req.flash('success', 'You have signed up, login to continue!');
         return res.redirect('back');
       }
     } catch (err) {
@@ -73,14 +75,15 @@ module.exports.create = async function(req, res) {
 // get the sign in  session for user
 module.exports.create_session = function(req, res){
     // TODO later
+    req.flash('success','Logged in Successfully');
     return res.redirect('/');
 }
 
 module.exports.destroySession = function(req,res){
-    req.logout(function(req){
-      console.log('You are logged out');
-      return;
-    });
-    
-    return res.redirect('/users/SignIn');
+  req.logout(function(req){
+    req.flash('success', 'You have logged out!');
+    return;
+  });
+  
+  return res.redirect('/');
 }

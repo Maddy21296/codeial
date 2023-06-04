@@ -9,12 +9,13 @@ module.exports.home = async function(req,res){
 
     try{
         let posts = await Post.find({})
+        .sort('-createdAt')
         .populate('user') // this populate function is used to display all user's data with post
         .populate({
             path: 'comments',
             populate: {
                 path: 'user'
-            }
+            }   
         });
 
         let users = await User.find({});
