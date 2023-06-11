@@ -30,11 +30,11 @@ class PostComments{
             $.ajax({
                 type: 'post',
                 url: '/comments/create',
-                data: $(self).serialize(),
+                data: newCommentForm.serialize(),
                 success: function(data){
-                    let newComment = pSelf.newCommentDom(data.data.comment);
-                    $(`#post-comments-${postId}`).prepend(newComment);
-                    pSelf.deleteComment($(' .delete-comment-button', newComment));
+                    let newComment = newCommentDom(data.data.comment);
+                    $(`#post-comments-list>ul`).prepend(newComment);
+                    deleteComment($(' .delete-comment-button', newComment));
 
                     // CHANGE :: enable the functionality of the toggle like button on the new comment
                     new Noty({
