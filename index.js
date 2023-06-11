@@ -10,6 +10,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-log-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
 
 // we are storing session information in mongo 
 const MongoStore = require('connect-mongo'); // (session) is used coz we will store session data in mongo
