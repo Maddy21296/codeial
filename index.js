@@ -11,6 +11,7 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-log-strategy');
 const passportJWT = require('./config/passport-jwt-strategy');
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
 // we are storing session information in mongo 
 const MongoStore = require('connect-mongo'); // (session) is used coz we will store session data in mongo
