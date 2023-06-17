@@ -1,2 +1,42 @@
 body {
-  background-color: orange; }
+  animation: theme 21s linear infinite; }
+  body:after, body:before {
+    content: '';
+    display: block;
+    position: fixed;
+    z-index: -1;
+    top: 20%;
+    width: 10%;
+    height: 10%;
+    width: 40vmax;
+    height: 40vmax;
+    background: rgba(0, 0, 0, 0.05);
+    animation: background 90s linear infinite; }
+  body:after {
+    left: 15%; }
+  body:before {
+    right: 15%;
+    animation-delay: -30s;
+    animation-direction: reverse; }
+
+@keyframes theme {
+  0% {
+    background: #74C390; }
+  16% {
+    background: #5DBDB6; }
+  33% {
+    background: #59D4E1; }
+  50% {
+    background: #51BCE8; }
+  66% {
+    background: #FA5374; }
+  83% {
+    background: #E46653; }
+  100% {
+    background: #74C390; } }
+
+@keyframes background {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
