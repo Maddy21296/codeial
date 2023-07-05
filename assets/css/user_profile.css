@@ -5,17 +5,17 @@ body {
     display: block;
     position: fixed;
     z-index: -1;
-    top: 20%;
+    top: 0;
     width: 10%;
     height: 10%;
-    width: 40vmax;
-    height: 40vmax;
+    width: 20vmax;
+    height: 20vmax;
     background: rgba(0, 0, 0, 0.05);
     animation: background 90s linear infinite; }
   body:after {
-    left: 15%; }
+    left: 5%; }
   body:before {
-    right: 15%;
+    right: 5%;
     animation-delay: -30s;
     animation-direction: reverse; }
 

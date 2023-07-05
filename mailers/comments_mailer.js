@@ -18,13 +18,12 @@ exports.newComment = async (comment) => {
         html: htmlTemplate,
       };
   
-      await nodeMailer.transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-          console.log('Error in sending mail', err);
-        } else {
-          console.log('Message Sent', info);
-        }
-      });
+      try {
+        await nodeMailer.transporter.sendMail(mailOptions);
+        console.log('Message Sent');
+      } catch (err) {
+        console.log('Error in sending mail', err);
+      }
     } catch (err) {
       console.log('Error in newComment:', err);
     }
