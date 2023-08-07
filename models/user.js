@@ -21,7 +21,13 @@ const userSchema = new mongoose.Schema({
     },
     avatar:{
         type: String // field which will be storing the path of the file coz database just stores the path of file not complete file
-    }
+    },
+    friendships:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Friendship'
+        }
+    ]
 },{
     timestamps: true
 });
