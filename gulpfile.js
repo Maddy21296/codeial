@@ -1,83 +1,125 @@
-// const gulp = require('gulp');
-import gulp from 'gulp';
-// const sass = require('gulp-sass')(require('node-sass'));
-// import sass from 'gulp-sass';
-import gulpSass from "gulp-sass";
-import nodeSass from "node-sass";
-const sass = gulpSass(nodeSass);
-// const cssnano = require('gulp-cssnano');
-import cssnano from 'gulp-cssnano';
-// const rev = require('gulp-rev');
-import rev from 'gulp-rev';
+const gulp = require('gulp');
+// this will conver scss into css
+const sass = require('gulp-sass')(require('sass'));
+// this lib will minify the css
+const cssnano = require('gulp-cssnano');
 
-// const uglify = require('gulp-uglify-es').default;
-import uglify from 'gulp-uglify-es';
-// const imagemin = require('gulp-imagemin');
-import imagemin from 'gulp-imagemin';
+const img = require('imagemin');
+
+const uglify = require('gulp-uglify-es').default;
+const imagemin = require('gulp-imagemin');
 // const del = require('del');
-// import {del} from 'del';
 
-gulp.task('css',(done) => {
-    console.log('minifying css...');
-    gulp.src('./assets/sass/**/*.scss')
-    .pipe(sass()) // this means it needs to be passed through gulp sass module
-    .pipe(cssnano()) // this means it needs to be passed through gulp css nano module
-    .pipe(gulp.dest('../assets.css')); // pipe is function which calling all these middlewares which are associated with gulp
+// this gulp task will minify the css
+gulp.task('css', async function(){
 
-    console.log('Minified CSS');
-    gulp.src('../assets/**/*.css')
-    .pipe(rev())
-    .pipe(gulp.dest('./public/assets'))
-    .pipe(rev.manifest({
-        cwd:'public', // cwd means current working directory
+   // this lib will remname the assets
+   const rev = await import('gulp-rev').then((module) => module.default || module.rev);
+
+
+   console.log(rev);
+
+   console.log('Minifying css...');
+
+   // this is for the development
+   gulp.src('./assets/sass/**/*.scss') // where to look for scss files sass/**  means all the folder inside sass and /*.scss all the files whith scss extension
+   .pipe(sass()) // converting all of the files into css
+   .pipe(cssnano()) // minifying all the converted files
+   .pipe(gulp.dest('./assets.css')) // defining where to store the final result
+
+   // this is for the production
+   return gulp.src('./assets/**/*.css')
+   .pipe(rev())// this will rename all the files
+   .pipe(gulp.dest('./public/assets'))
+   .pipe(rev.manifest({ // menifest maintain a map bw the original file name and the new name of the file
+        cwd: 'public',
         merge: true
-    }))
-    .pipe(gulp.dest('./public/assets'));
-    done();
+   }))
+   .pipe(gulp.dest('./public/assets'));
 });
 
+// this gulp task will minify the js
+gulp.task('js', async function(){
 
-gulp.task('js',(done) => {
-    console.log('minifying js...');
-    gulp.src('./assets/sass/**/*.js')
-    // .pipe(uglify-es()) 
-    .pipe(rev()) 
+    // this lib will remname the assets
+    const rev = await import('gulp-rev').then((module) => module.default || module.rev);
+ 
+ 
+    console.log(rev);
+ 
+    console.log('Minifying js...');
+ 
+    // this is for the development
+    gulp.src('./assets/sass/**/*.js') // where to look for scss files sass/**  means all the folder inside sass and /*.scss all the files whith scss extension
+    .pipe(uglify()) // converting all of the files into js
+    .pipe(rev()) // minifying all the converted files
+    .pipe(gulp.dest('./assets.js')) // defining where to store the final result
+ 
+    // this is for the production
+    return gulp.src('./assets/**/*.js')
+    .pipe(rev())// this will rename all the files
     .pipe(gulp.dest('./public/assets'))
-
-    .pipe(rev.manifest({
-        cwd:'public', // cwd means current working directory
-        merge: true
+    .pipe(rev.manifest({ // menifest maintain a map bw the original file name and the new name of the file
+         cwd: 'public',
+         merge: true
     }))
     .pipe(gulp.dest('./public/assets'));
-    done();
-});
+ });
+ 
 
+// this gulp task will minify the css
+gulp.task('images', async function(){
 
-gulp.task('images',(done) => {
-    console.log('compressing images...');
-    gulp.src('./assets/sass/**/*.+(png|hpg|svg|gif|jpeg')
-    .pipe(imagemin()) 
-    .pipe(rev()) 
+    // this lib will remname the assets
+    const rev = await import('gulp-rev').then((module) => module.default || module.rev);
+ 
+ 
+    console.log(rev);
+ 
+    console.log('Minifying images...');
+ 
+    // this is for the development
+    gulp.src('./assets/sass/**/*.+(png|hpg|svg|gif|jpeg') // where to look for scss files sass/**  means all the folder inside sass and /*.scss all the files whith scss extension
+    .pipe(imagemin()) // converting all of the files into image
+    .pipe(rev()) // minifying all the converted files
+    .pipe(gulp.dest('./assets.images')) // defining where to store the final result
+ 
+    // this is for the production
+    return gulp.src('./assets/**/*.+(png|hpg|svg|gif|jpeg')
+    .pipe(rev())// this will rename all the files
     .pipe(gulp.dest('./public/assets'))
-
-    .pipe(rev.manifest({
-        cwd:'public', // cwd means current working directory
-        merge: true
+    .pipe(rev.manifest({ // menifest maintain a map bw the original file name and the new name of the file
+         cwd: 'public',
+         merge: true
     }))
     .pipe(gulp.dest('./public/assets'));
-    done();
-});
-
-//empty the public assets directory
-// gulp.task('clean:assets',(done) => {
+ });
+ 
+// empty the public assets directory
+// gulp.task('clean:assets',async function(){
 //     del.sync(['./public/assets'],{force:true});
-//     done();
 // });
 
-gulp.task('build',gulp.series('css','js','images'),(done) =>{
+gulp.task('build',gulp.series('css','js','images'),async function(){
     console.log('Building assets');
     done();
 });
+// gulp.task('js',(done) => {
+//     console.log('minifying js...');
+//     gulp.src('./assets/sass/**/*.js')
+//     // .pipe(uglify-es()) 
+//     .pipe(rev()) 
+//     .pipe(gulp.dest('./public/assets'))
+
+//     .pipe(rev.manifest({
+//         cwd:'public', // cwd means current working directory
+//         merge: true
+//     }))
+//     .pipe(gulp.dest('./public/assets'));
+//     done();
+// });
+
+
 
 // const gulp = require('gulp');
 
