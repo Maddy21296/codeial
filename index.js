@@ -1,6 +1,8 @@
 const express = require('express');
 const env = require('./config/environment');
 const logger = require('morgan');
+const cors = require('cors');
+
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -9,6 +11,7 @@ const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 
 const db = require('./config/mongoose');
+
 
 // used for session cookies
 const session = require('express-session');
@@ -33,6 +36,7 @@ chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
 
 const path = require('path');
+app.use(cors());
 
 if (env.name == 'development'){
     app.use(sassMiddleware({
